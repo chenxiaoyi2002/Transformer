@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>变压器设计计算平台 | 正激·反激·推挽·半桥·全桥·LLC·移相全桥</title>
+    <!-- 外部样式表 -->
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/transformer.css">
+</head>
+<body class="has-nav">
+<!-- 高级导航栏 -->
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="#" class="navbar-brand">
+            <div class="navbar-brand-icon">⚡</div>
+            <span>磁芯工程平台</span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="index.html" class="nav-link"><span class="nav-icon">🧲</span> 铁氧体磁芯</a></li>
+            <li><a href="CalculationMetalMagneticCore.html" class="nav-link"><span class="nav-icon">🛡️</span> 金属磁芯</a></li>
+            <li><a href="DataImport.html" class="nav-link"><span class="nav-icon">📊</span> 数据导入</a></li>
+            <li><a href="TransformerCalculation.html" class="nav-link active"><span class="nav-icon">⚡</span> 变压器计算</a></li>
+            <li><a href="CommonMagneticCoreSpecifications.html" class="nav-link"><span class="nav-icon">📚</span> 磁芯规格库</a></li>
+            <li><a href="TransformerHandbook.html" class="nav-link"><span class="nav-icon">📖</span> 设计手册</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="hero">
+        <h1>⚡ 变压器设计计算平台</h1>
+        <p>正激 · 反激 · 推挽 · 半桥 · 全桥 · LLC半桥 · 移相全桥 — 完整计算逻辑与原理图可视化</p>
+    </div>
+
+    <!-- 拓扑选择器 -->
+    <div class="topo-selector">
+        <button class="topo-btn active" data-topo="forward"><span class="topo-icon">➡️</span> 正激</button>
+        <button class="topo-btn" data-topo="flyback"><span class="topo-icon">🔄</span> 反激</button>
+        <button class="topo-btn" data-topo="pushpull"><span class="topo-icon">↔️</span> 推挽</button>
+        <button class="topo-btn" data-topo="halfbridge"><span class="topo-icon">🌉</span> 半桥</button>
+        <button class="topo-btn" data-topo="fullbridge"><span class="topo-icon">🌁</span> 全桥</button>
+        <button class="topo-btn" data-topo="llc"><span class="topo-icon">🎯</span> LLC半桥</button>
+        <button class="topo-btn" data-topo="phasefull"><span class="topo-icon">📐</span> 移相全桥</button>
+    </div>
+
+    <!-- 原理图区域 -->
+    <div class="schematic-area">
+        <div class="schematic-title">📐 正激变压器原理图 (Forward Converter)</div>
+        <div id="schematicContainer">
+            <svg viewBox="0 0 600 280" style="width:100%; max-width:700px;">
+                <!-- 正激原理图 -->
+                <!-- 输入直流 -->
+                <rect x="30" y="110" width="50" height="40" fill="#eef3fc" stroke="#3b82f6" stroke-width="2" rx="4"/>
+                <text x="55" y="135" text-anchor="middle" font-size="11" font-weight="600" fill="#1e4a76">Vin</text>
+                
+                <!-- 开关管 -->
+                <rect x="110" y="115" width="40" height="30" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="3"/>
+                <text x="130" y="134" text-anchor="middle" font-size="10" font-weight="600" fill="#92400e">Q1</text>
+                
+                <!-- 变压器 -->
+                <g transform="translate(180, 80)">
+                    <rect x="0" y="0" width="80" height="100" fill="white" stroke="#1e4a76" stroke-width="2.5" rx="6"/>
+                    <line x1="10" y1="20" x2="70" y2="20" stroke="#1e4a76" stroke-width="2"/>
+                    <line x1="10" y1="40" x2="70" y2="40" stroke="#1e4a76" stroke-width="2"/>
+                    <line x1="10" y1="60" x2="70" y2="60" stroke="#1e4a76" stroke-width="2"/>
+                    <line x1="10" y1="80" x2="70" y2="80" stroke="#1e4a76" stroke-width="2"/>
+                    <text x="40" y="55" text-anchor="middle" font-size="10" font-weight="700" fill="#0c4a6e">T1</text>
+                    <text x="40" y="70" text-anchor="middle" font-size="8" fill="#4b556b">1:Ns</text>
+                </g>
+                
+                <!-- 输出整流 -->
+                <rect x="290" y="115" width="35" height="30" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="3"/>
+                <text x="307" y="134" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">D1</text>
+                
+                <!-- 滤波电感 -->
+                <rect x="350" y="110" width="50" height="40" fill="#eef3fc" stroke="#3b82f6" stroke-width="2" rx="4"/>
+                <text x="375" y="135" text-anchor="middle" font-size="11" font-weight="600" fill="#1e4a76">Lf</text>
+                
+                <!-- 输出电容 -->
+                <rect x="430" y="115" width="40" height="30" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="3"/>
+                <text x="450" y="134" text-anchor="middle" font-size="10" font-weight="600" fill="#92400e">Co</text>
+                
+                <!-- 负载 -->
+                <rect x="500" y="115" width="50" height="30" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="3"/>
+                <text x="525" y="134" text-anchor="middle" font-size="10" font-weight="600" fill="#065f46">Load</text>
+                
+                <!-- 连线 -->
+                <line x1="80" y1="130" x2="110" y2="130" stroke="#1a2c3e" stroke-width="2"/>
+                <line x1="150" y1="130" x2="180" y2="130" stroke="#1a2c3e" stroke-width="2"/>
+                <line x1="260" y1="130" x2="290" y2="130" stroke="#1a2c3e" stroke-width="2"/>
+                <line x1="325" y1="130" x2="350" y2="130" stroke="#1a2c3e" stroke-width="2"/>
+                <line x1="400" y1="130" x2="430" y2="130" stroke="#1a2c3e" stroke-width="2"/>
+                <line x1="470" y1="130" x2="500" y2="130" stroke="#1a2c3e" stroke-width="2"/>
+                
+                <!-- 辅助标注 -->
+                <text x="200" y="210" text-anchor="middle" font-size="9" fill="#6b7a95">开关管导通时能量传递到副边</text>
+                <text x="200" y="225" text-anchor="middle" font-size="9" fill="#6b7a95">适用于中等功率 (50W~500W)</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- 输入参数 -->
+    <div class="tf-grid">
+        <!-- 左侧：输入规格 -->
+        <div class="tf-card">
+            <div class="tf-card-title">📥 输入规格</div>
+            <div class="tf-row">
+                <div class="tf-group">
+                    <label>输入电压 Vin</label>
+                    <div class="tf-input"><input type="number" id="tfVin" value="400" step="10"><span class="tf-unit">V</span></div>
+                </div>
+                <div class="tf-group">
+                    <label>输出电压 Vout</label>
+                    <div class="tf-input"><input type="number" id="tfVout" value="12" step="0.5"><span class="tf-unit">V</span></div>
+                </div>
+            </div>
+            <div class="tf-row">
+                <div class="tf-group">
+                    <label>输出电流 Iout</label>
+                    <div class="tf-input"><input type="number" id="tfIout" value="10" step="0.5"><span class="tf-unit">A</span></div>
+                </div>
+                <div class="tf-group">
+                    <label>开关频率 fsw</label>
+                    <div class="tf-input"><input type="number" id="tfFsw" value="100" step="5"><span class="tf-unit">kHz</span></div>
+                </div>
+            </div>
+            <div class="tf-row">
+                <div class="tf-group">
+                    <label>占空比 Dmax</label>
+                    <div class="tf-input"><input type="number" id="tfDmax" value="0.45" step="0.01"><span class="tf-unit">—</span></div>
+                </div>
+                <div class="tf-group">
+                    <label>效率 η</label>
+                    <div class="tf-input"><input type="number" id="tfEff" value="0.9" step="0.01"><span class="tf-unit">—</span></div>
+                </div>
+            </div>
+            <button class="tf-btn-calc" id="tfCalcBtn">⚡ 计算变压器参数</button>
+        </div>
+
+        <!-- 右侧：磁芯选择 -->
+        <div class="tf-card">
+            <div class="tf-card-title">🧲 磁芯 & 绕组</div>
+            <div class="tf-row">
+                <div class="tf-group">
+                    <label>磁芯型号</label>
+                    <div class="tf-input">
+                        <select id="tfCore">
+                            <option value="EE25">EE25 (Ae=0.49cm²)</option>
+                            <option value="EE30" selected>EE30 (Ae=0.92cm²)</option>
+                            <option value="EE35">EE35 (Ae=1.19cm²)</option>
+                            <option value="EE40">EE40 (Ae=1.54cm²)</option>
+                            <option value="EE50">EE50 (Ae=3.02cm²)</option>
+                            <option value="PQ35/35">PQ35/35 (Ae=1.56cm²)</option>
+                            <option value="PQ40/40">PQ40/40 (Ae=2.30cm²)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tf-group">
+                    <label>磁材类型</label>
+                    <div class="tf-input">
+                        <select id="tfMaterial">
+                            <option value="pc40">PC40 (MnZn)</option>
+                            <option value="pc44">PC44</option>
+                            <option value="lp3">LP3 (低损耗)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="tf-row">
+                <div class="tf-group">
+                    <label>导线类型</label>
+                    <div class="tf-input">
+                        <select id="tfWireType">
+                            <option value="enamel">漆包线</option>
+                            <option value="litz">利兹线</option>
+                            <option value="foil">铜箔</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="tf-group">
+                    <label>电流密度 J</label>
+                    <div class="tf-input"><input type="number" id="tfJ" value="4" step="0.5"><span class="tf-unit">A/mm²</span></div>
+                </div>
+            </div>
+            <div class="tf-row">
+                <div class="tf-group">
+                    <label>窗口利用系数 Ku</label>
+                    <div class="tf-input"><input type="number" id="tfKu" value="0.35" step="0.05"><span class="tf-unit">—</span></div>
+                </div>
+                <div class="tf-group">
+                    <label>磁通密度摆幅 ΔB</label>
+                    <div class="tf-input"><input type="number" id="tfDeltaB" value="0.2" step="0.01"><span class="tf-unit">T</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 计算结果 -->
+    <div class="tf-card" style="margin-bottom: 24px;">
+        <div class="tf-card-title">📊 计算结果</div>
+        <div class="tf-result-grid">
+            <div class="tf-result-item">
+                <div class="tf-result-label">匝数比 Np:Ns</div>
+                <div class="tf-result-value" id="resTurnsRatio">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">原边匝数 Np</div>
+                <div class="tf-result-value" id="resNp">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">副边匝数 Ns</div>
+                <div class="tf-result-value" id="resNs">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">磁芯有效面积 Ae</div>
+                <div class="tf-result-value" id="resAe">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">气隙长度 lg</div>
+                <div class="tf-result-value" id="resLg">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">原边电流 Ipri</div>
+                <div class="tf-result-value" id="resIp">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">副边电流 Isec</div>
+                <div class="tf-result-value" id="resIs">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">线径选择 (AWG)</div>
+                <div class="tf-result-value" id="resAwg">---</div>
+            </div>
+        </div>
+        <div class="tf-note">
+            📐 计算基于经典变压器设计公式：N = V/(4.44·f·B·Ae)，气隙计算 lg = (μ0·μr·N²·Ae)/Leff<br>
+            不同拓扑的占空比、电流应力、电压应力会有所不同，本计算以正激为默认模型。
+        </div>
+    </div>
+
+    <!-- 线径参考表 -->
+    <div class="tf-card">
+        <div class="tf-card-title">📏 常用线径参考 (AWG)</div>
+        <table class="tf-wire-table">
+            <thead>
+                <tr><th>AWG</th><th>直径 (mm)</th><th>截面积 (mm²)</th><th>截面积 (cmil)</th><th>载流量 @4A/mm² (A)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>18</td><td>1.02</td><td>0.823</td><td>1620</td><td>3.29</td></tr>
+                <tr><td>17</td><td>1.15</td><td>1.04</td><td>2050</td><td>4.16</td></tr>
+                <tr><td>16</td><td>1.29</td><td>1.31</td><td>2580</td><td>5.24</td></tr>
+                <tr><td>15</td><td>1.45</td><td>1.65</td><td>3260</td><td>6.60</td></tr>
+                <tr><td>14</td><td>1.63</td><td>2.08</td><td>4110</td><td>8.32</td></tr>
+                <tr><td>13</td><td>1.83</td><td>2.62</td><td>5180</td><td>10.48</td></tr>
+                <tr><td>12</td><td>2.05</td><td>3.31</td><td>6530</td><td>13.24</td></tr>
+                <tr><td>11</td><td>2.30</td><td>4.17</td><td>8230</td><td>16.68</td></tr>
+                <tr><td>10</td><td>2.59</td><td>5.26</td><td>10380</td><td>21.04</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="../JavaScript/transformer.js"></script>
+</body>
+</html>

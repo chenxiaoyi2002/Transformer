@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>铁氧体磁芯全面计算平台 | 功率损耗 · 有效参数 · B-H曲线 · tanδ</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- 外部样式表 -->
+    <link rel="stylesheet" href="../styles/index.css">
+</head>
+<body class="has-nav">
+<!-- 高级导航栏 -->
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="#" class="navbar-brand">
+            <div class="navbar-brand-icon">⚡</div>
+            <span>磁芯工程平台</span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="index.html" class="nav-link active"><span class="nav-icon">🧲</span> 铁氧体磁芯</a></li>
+            <li><a href="CalculationMetalMagneticCore.html" class="nav-link"><span class="nav-icon">🛡️</span> 金属磁芯</a></li>
+            <li><a href="TransformerCalculation.html" class="nav-link"><span class="nav-icon">⚡</span> 变压器计算</a></li>
+            <li><a href="CommonMagneticCoreSpecifications.html" class="nav-link"><span class="nav-icon">📚</span> 磁芯规格库</a></li>
+            <li><a href="DataImport.html" class="nav-link"><span class="nav-icon">📊</span> 数据导入</a></li>
+            <li><a href="TransformerHandbook.html" class="nav-link"><span class="nav-icon">📖</span> 设计手册</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="hero">
+        <h1>🧲 铁氧体磁芯综合工程平台</h1>
+        <p>初始磁导率 μᵢ · 动态B-H回线 · 损耗角正切 tanδ · 功率损耗 Pv · 有效参数 & 电阻率</p>
+    </div>
+
+    <!-- 第一行：磁导率 + 损耗角正切 -->
+    <div class="grid-2col">
+        <!-- 左侧: μi 计算 -->
+        <div class="card">
+            <div class="card-title">📐 初始磁导率 μ<sub>i</sub> (电感法)</div>
+            <div class="form-row">
+                <div class="form-group"><label>匝数 N</label><div class="input-icon"><input type="number" id="turns" value="50" step="1"><span class="unit">匝</span></div></div>
+                <div class="form-group"><label>A<sub>e</sub> (cm²)</label><div class="input-icon"><input type="number" id="area" value="0.28" step="0.01"><span class="unit">cm²</span></div></div>
+                <div class="form-group"><label>l<sub>e</sub> (cm)</label><div class="input-icon"><input type="number" id="length" value="4.8" step="0.1"><span class="unit">cm</span></div></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>L<sub>core</sub> (μH)</label><div class="input-icon"><input type="number" id="Lcore" value="135" step="5"><span class="unit">μH</span></div></div>
+                <div class="form-group"><label>L<sub>air</sub> (μH)</label><div class="input-icon"><input type="number" id="Lair" value="1.3" step="0.1"><span class="unit">μH</span></div></div>
+            </div>
+            <button id="calcMuBtn">⚡ 计算 μ<sub>i</sub></button>
+            <div class="result-panel">
+                <div style="font-weight: 600;">相对初始磁导率 μ<sub>i</sub></div>
+                <div class="result-value" id="muResult">---</div>
+                <div class="note">📐 μ<sub>i</sub> = (L<sub>core</sub>−L<sub>air</sub>)·l<sub>e</sub> / (4πN²·A<sub>e</sub>·10⁻⁹)</div>
+            </div>
+        </div>
+
+        <!-- 右侧: tanδ 分解模型 -->
+        <div class="card">
+            <div class="card-title">⚙️ 损耗角正切 tanδ · 三因子模型</div>
+            <div class="form-row">
+                <div class="form-group"><label>电感 L (μH)</label><div class="input-icon"><input type="number" id="tanL" value="135" step="5"><span class="unit">μH</span></div></div>
+                <div class="form-group"><label>体积 V<sub>1</sub> (cm³)</label><div class="input-icon"><input type="number" id="vol" value="2.8" step="0.2"><span class="unit">cm³</span></div></div>
+                <div class="form-group"><label>频率 f (kHz)</label><div class="input-icon"><input type="number" id="freq" value="100" step="10"><span class="unit">kHz</span></div></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>h₁ (磁滞系数)</label><div class="input-icon"><input type="number" id="h1coef" value="0.0115" step="0.0005"></div></div>
+                <div class="form-group"><label>e₁ (涡流系数)</label><div class="input-icon"><input type="number" id="e1coef" value="2.2e-7" step="0.1e-7"><span class="unit">s</span></div></div>
+                <div class="form-group"><label>r₁ (剩余系数)</label><div class="input-icon"><input type="number" id="r1coef" value="0.0032" step="0.0002"></div></div>
+            </div>
+            <button id="calcTanDeltaBtn">📊 计算 tanδ 分量</button>
+            <div class="result-panel">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>tanδ<sub>h</sub> = <strong id="tanhVal">0.0000</strong></span>
+                    <span>tanδ<sub>e</sub> = <strong id="taneVal">0.0000</strong></span>
+                    <span>tanδ<sub>r</sub> = <strong id="tanrVal">0.0000</strong></span>
+                </div>
+                <div class="result-highlight" style="margin-top: 10px;">
+                    总 tanδ = <span id="totalTanDelta" class="result-green">---</span>
+                </div>
+                <div class="note">✅ tanδ<sub>h</sub> = h₁·√(L/V₁) &nbsp; tanδ<sub>e</sub> = e₁·f &nbsp; tanδ<sub>r</sub> = r₁</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第二行: 功率损耗 Pv 与 磁通密度B 计算 -->
+    <div class="grid-2col">
+        <div class="card">
+            <div class="card-title">🔋 功率损耗 Pv · 工作磁通密度 B</div>
+            <div class="form-row">
+                <div class="form-group"><label>电压 V (V)</label><div class="input-icon"><input type="number" id="voltageV" value="12" step="1"><span class="unit">V</span></div></div>
+                <div class="form-group"><label>频率 f (Hz)</label><div class="input-icon"><input type="number" id="freqB" value="50000" step="5000"><span class="unit">Hz</span></div></div>
+                <div class="form-group"><label>匝数 N</label><div class="input-icon"><input type="number" id="nB" value="20" step="1"><span class="unit">匝</span></div></div>
+                <div class="form-group"><label>A<sub>e</sub> (cm²)</label><div class="input-icon"><input type="number" id="aeB" value="0.28" step="0.02"><span class="unit">cm²</span></div></div>
+            </div>
+            <button id="calcBfluxBtn">🧲 计算磁通密度 B (高斯/特斯拉)</button>
+            <div class="result-panel">
+                <div><strong>🔹 工作磁通密度 B</strong></div>
+                <div class="result-value" id="bGauss">--- Gauss</div>
+                <div class="result-value-sm" id="bTesla">--- T</div>
+                <div class="note">📐 公式: B = V × 10⁸ / (4.44 × f × N × A<sub>e</sub>)  [B: 高斯, A<sub>e</sub>: cm²]</div>
+            </div>
+            <div class="result-panel spacing-top">
+                <div><strong>⚡ 功率损耗 Pv (体积损耗, 参考估算)</strong></div>
+                <div class="result-value" id="pvValue">--- kW/m³</div>
+                <div class="note">🔎 基于典型MnZn铁氧体PC40损耗曲线: Pv = 1.2e-4 × f<sup>1.3</sup> × B<sub>mT</sub><sup>2.2</sup> (f: kHz, B: mT) 估算，仅供参考。</div>
+                <button id="refreshPvBtn" class="btn-secondary">🔄 更新 Pv 估算</button>
+            </div>
+        </div>
+
+        <!-- 电阻率 ρ 与其他性质卡片 -->
+        <div class="card">
+            <div class="card-title">⚡ 电阻率 ρ · 磁芯有效参数</div>
+            <div class="form-row">
+                <div class="form-group"><label>电阻率 ρ (Ω·m)</label><div class="input-icon"><input type="number" id="resistivity" value="1.2" step="0.1"><span class="unit">Ω·m</span></div></div>
+                <div class="form-group"><label>典型参考</label><div class="input-icon"><select id="rhoSelect"><option value="1.2">MnZn 铁氧体 ~1 Ω·m</option><option value="100">NiZn 铁氧体 ~10² Ω·m</option><option value="0.5">低电阻率</option></select></div></div>
+            </div>
+            <div class="result-panel">
+                <div>当前电阻率: <strong id="rhoDisplay">1.20</strong> Ω·m &nbsp; <span class="badge">绝缘特性直接影响涡流损耗</span></div>
+                <div class="note">📌 铁氧体电阻率范围: 10⁻¹ ~ 10⁵ Ω·m, 高ρ可抑制高频涡流损耗。</div>
+            </div>
+            <hr>
+            <div><strong>📐 磁芯有效参数 (几何计算)</strong></div>
+            <div class="form-row">
+                <div class="form-group"><label>中心柱面积 A<sub>ep</sub> (cm²)</label><div class="input-icon"><input type="number" id="aep" value="0.3" step="0.02"><span class="unit">cm²</span></div></div>
+                <div class="form-group"><label>最小截面积 A<sub>min</sub> (cm²)</label><div class="input-icon"><input type="number" id="amin" value="0.26" step="0.02"><span class="unit">cm²</span></div></div>
+                <div class="form-group"><label>磁路长度 l<sub>e</sub> (cm)</label><div class="input-icon"><input type="number" id="leGeom" value="4.8" step="0.1"><span class="unit">cm</span></div></div>
+                <div class="form-group"><label>线圈面积 A<sub>w</sub> (cm²)</label><div class="input-icon"><input type="number" id="aw" value="0.45" step="0.05"><span class="unit">cm²</span></div></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>磁芯密度 (g/cm³)</label><div class="input-icon"><input type="number" id="density" value="4.8" step="0.1"><span class="unit">g/cm³</span></div></div>
+                <div class="form-group"><label>重量 W (计算)</label><div class="input-icon"><input type="text" id="weightResult" readonly placeholder="自动计算"></div></div>
+            </div>
+            <button id="calcEffParamsBtn">📏 计算有效参数 C1, Ae, Ve, 重量</button>
+            <div class="result-panel spacing-top">
+                <div class="flex-badge"><span>✔ 有效截面积 A<sub>e</sub> = <strong id="effAe">---</strong> cm²</span>  <span>✔ 有效体积 V<sub>e</sub> = <strong id="effVe">---</strong> cm³</span></div>
+                <div class="flex-badge"><span>🔹 磁芯常数 C<sub>1</sub> = <strong id="c1Val">---</strong> cm⁻¹</span>  <span>🔸 C<sub>1</sub> = l<sub>e</sub>/A<sub>e</sub></span></div>
+                <div class="note">📌 A<sub>e</sub> 为有效截面积，通常取中心柱与最小截面积的几何均值或给定值。本计算采用 A<sub>e</sub> = √(A<sub>ep</sub>·A<sub>min</sub>) 近似。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== 新增行: 铜损 · 膜包线 · 扁平线 用量计算 ========== -->
+    <div class="grid-3col">
+        <!-- 铜损计算 -->
+        <div class="card">
+            <div class="card-title">🔥 铜损 P<sub>cu</sub> 计算</div>
+            <div class="form-row">
+                <div class="form-group"><label>电流 I (A)</label><div class="input-icon"><input type="number" id="cuI" value="1.5" step="0.1"><span class="unit">A</span></div></div>
+                <div class="form-group"><label>导线直径 d (mm)</label><div class="input-icon"><input type="number" id="cuDiam" value="0.5" step="0.05"><span class="unit">mm</span></div></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>导线长度 l (m)</label><div class="input-icon"><input type="number" id="cuLength" value="10" step="1"><span class="unit">m</span></div></div>
+                <div class="form-group"><label>工作温度 (°C)</label><div class="input-icon"><input type="number" id="cuTemp" value="80" step="5"><span class="unit">°C</span></div></div>
+            </div>
+            <button id="calcCuBtn" class="btn-copper">🔥 计算铜损</button>
+            <div class="result-panel">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>导线电阻 R = <strong id="cuResistance">---</strong> Ω</span>
+                    <span>电流密度 J = <strong id="cuJ">---</strong> A/mm²</span>
+                </div>
+                <div class="result-highlight spacing-top">
+                    铜损 P<sub>cu</sub> = <span id="cuLoss" class="result-warm">---</span> W
+                </div>
+                <div class="note">📐 铜电阻率 ρ<sub>cu</sub> = 1.724×10⁻⁸ Ω·m (20°C), 温度系数 0.00393/°C<br>R = ρ × l / A, P<sub>cu</sub> = I² × R</div>
+            </div>
+        </div>
+
+        <!-- 膜包线用量计算 -->
+        <div class="card">
+            <div class="card-title">🧵 膜包线 (漆包线) 用量计算</div>
+            <div class="form-row">
+                <div class="form-group"><label>线圈匝数 N</label><div class="input-icon"><input type="number" id="mfTurns" value="50" step="1"><span class="unit">匝</span></div></div>
+                <div class="form-group"><label>导线直径 d (mm)</label><div class="input-icon"><input type="number" id="mfDiam" value="0.5" step="0.05"><span class="unit">mm</span></div></div>
+                <div class="form-group"><label>股数 N<sub>s</sub></label><div class="input-icon"><input type="number" id="mfStrands" value="1" step="1" min="1"><span class="unit">股</span></div></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>磁芯中心柱宽 a (mm)</label><div class="input-icon"><input type="number" id="mfCoreA" value="12" step="1"><span class="unit">mm</span></div></div>
+                <div class="form-group"><label>窗口宽度 b (mm)</label><div class="input-icon"><input type="number" id="mfCoreB" value="6" step="1"><span class="unit">mm</span></div></div>
+            </div>
+            <button id="calcMfBtn" class="btn-secondary">🧵 计算膜包线用量</button>
+            <div class="result-panel">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>平均匝长 L<sub>avg</sub> = <strong id="mfAvgTurn">---</strong> mm</span>
+                    <span>总长度 L<sub>total</sub> = <strong id="mfTotalLen">---</strong> m</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-top: 6px;">
+                    <span>单股截面 A = <strong id="mfSection">---</strong> mm²</span>
+                    <span>总截面 A<sub>total</sub> = <strong id="mfTotalSection">---</strong> mm²</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-top: 6px;">
+                    <span>总铜重 W<sub>cu</sub> = <strong id="mfWeight">---</strong> g</span>
+                    <span>并联电阻 R = <strong id="mfResistance">---</strong> Ω</span>
+                </div>
+                <div class="note">📐 平均匝长 ≈ 2×(a+b) + 2×d, 铜密度 8.96 g/cm³<br>多股并联: A<sub>total</sub> = A × N<sub>s</sub>, R = R<sub>单股</sub> / N<sub>s</sub></div>
+            </div>
+        </div>
+
+        <!-- 扁平线用量计算 -->
+        <div class="card">
+            <div class="card-title">📏 扁平线 (铜带) 用量计算</div>
+            <div class="form-row">
+                <div class="form-group"><label>扁平线宽度 w (mm)</label><div class="input-icon"><input type="number" id="fwWidth" value="5" step="0.5"><span class="unit">mm</span></div></div>
+                <div class="form-group"><label>扁平线厚度 t (mm)</label><div class="input-icon"><input type="number" id="fwThick" value="1.0" step="0.1"><span class="unit">mm</span></div></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>总长度 l (m)</label><div class="input-icon"><input type="number" id="fwLength" value="5" step="0.5"><span class="unit">m</span></div></div>
+                <div class="form-group"><label>铜单价 (元/kg)</label><div class="input-icon"><input type="number" id="fwPrice" value="75" step="5"><span class="unit">元/kg</span></div></div>
+            </div>
+            <button id="calcFwBtn" class="btn-accent">📏 计算扁平线用量</button>
+            <div class="result-panel">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>截面积 A = <strong id="fwSection">---</strong> mm²</span>
+                    <span>总铜重 W = <strong id="fwWeight">---</strong> kg</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-top: 6px;">
+                    <span>铜材成本 = <strong id="fwCost" class="result-warm">---</strong> 元</span>
+                    <span>直流电阻 R = <strong id="fwResistance">---</strong> Ω</span>
+                </div>
+                <div class="note">📐 扁平线截面积 A = w × t, 铜密度 8960 kg/m³<br>R = ρ<sub>cu</sub> × l / A (20°C)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第三行: B-H 曲线 + 初始磁化曲线 可视化 -->
+    <div class="grid-charts">
+        <div class="chart-box">
+            <h3>🔄 动态磁滞回线 (B-H Loop)</h3>
+            <p>调节 B<sub>s</sub>, B<sub>r</sub>, H<sub>c</sub> 实时更新</p>
+            <canvas id="hysteresisCanvas" width="500" height="300" style="width:100%; max-height:320px;"></canvas>
+            <div class="form-row" style="margin-top:12px;">
+                <div class="form-group"><label>饱和磁密 B<sub>s</sub> (T)</label><div class="input-icon"><input type="number" id="BsVal" value="0.48" step="0.01"></div></div>
+                <div class="form-group"><label>剩磁 B<sub>r</sub> (T)</label><div class="input-icon"><input type="number" id="BrVal" value="0.18" step="0.01"></div></div>
+                <div class="form-group"><label>矫顽力 H<sub>c</sub> (A/m)</label><div class="input-icon"><input type="number" id="HcVal" value="24.5" step="1"></div></div>
+            </div>
+            <button id="updateHysteresisBtn" class="btn-secondary">🔄 更新磁滞回线</button>
+        </div>
+        <div class="chart-box">
+            <h3>📈 初始磁化曲线 (退磁→饱和)</h3>
+            <canvas id="initMagCanvas" width="500" height="300" style="width:100%; max-height:320px;"></canvas>
+            <div class="note">初始磁导率 μ<sub>i</sub> = lim<sub>H→0</sub>(B/H)，曲线起始斜率为 μ<sub>i</sub>·μ<sub>0</sub></div>
+        </div>
+    </div>
+
+    <!-- tanδ频率特性图 -->
+    <div class="card card-full">
+        <div class="card-title">📈 损耗角正切频率特性 (10kHz~1MHz)</div>
+        <canvas id="tanDeltaSpectrum" width="800" height="300" style="width:100%; max-height:320px;"></canvas>
+        <div class="note">基于当前 h₁, e₁, r₁ 系数绘制的 tanδ<sub>h</sub>, tanδ<sub>e</sub> 及总 tanδ 随频率变化曲线 (涡流分量随频率线性增长)</div>
+    </div>
+
+    <!-- 定义与补充说明 -->
+    <div class="card">
+        <div class="card-title">📖 铁氧体关键参数定义 (基于标准)</div>
+        <div class="def-grid">
+            <div class="def-item"><strong>🔹 功率损耗 Pv</strong><br>高频大磁场下变压器铁芯损耗，与 B, f 密切相关。<br>B = V/(4.44·f·N·A<sub>e</sub>) ×10⁸ (高斯)</div>
+            <div class="def-item"><strong>🔸 电阻率 ρ</strong><br>衡量材料绝缘性能，高ρ 降低涡流损耗。</div>
+            <div class="def-item"><strong>🔹 有效参数</strong><br>A<sub>e</sub> 有效截面积, l<sub>e</sub> 有效磁路长度, V<sub>e</sub>=A<sub>e</sub>·l<sub>e</sub>, C<sub>1</sub>=l<sub>e</sub>/A<sub>e</sub>。</div>
+            <div class="def-item"><strong>🔸 铜损 P<sub>cu</sub></strong><br>P<sub>cu</sub> = I²R，受温度影响。<br>绕组设计需平衡铜损与铁损。</div>
+        </div>
+    </div>
+</div>
+
+<script src="../JavaScript/index.js"></script>
+</body>
+</html>

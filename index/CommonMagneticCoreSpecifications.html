@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>常用磁芯规格库 | EE · PQ · ETD · RM · 铁氧体 · 金属磁芯</title>
+    <!-- 外部样式表 -->
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/core-specs.css">
+</head>
+<body class="has-nav">
+<!-- 高级导航栏 -->
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="#" class="navbar-brand">
+            <div class="navbar-brand-icon">⚡</div>
+            <span>磁芯工程平台</span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="index.html" class="nav-link"><span class="nav-icon">🧲</span> 铁氧体磁芯</a></li>
+            <li><a href="CalculationMetalMagneticCore.html" class="nav-link"><span class="nav-icon">🛡️</span> 金属磁芯</a></li>
+            <li><a href="DataImport.html" class="nav-link"><span class="nav-icon">📊</span> 数据导入</a></li>
+            <li><a href="TransformerCalculation.html" class="nav-link"><span class="nav-icon">⚡</span> 变压器计算</a></li>
+            <li><a href="CommonMagneticCoreSpecifications.html" class="nav-link active"><span class="nav-icon">📚</span> 磁芯规格库</a></li>
+            <li><a href="TransformerHandbook.html" class="nav-link"><span class="nav-icon">📖</span> 设计手册</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="hero">
+        <h1>📚 常用磁芯规格库</h1>
+        <p>EE · EI · ETD · ER · PQ · RM · Toroid — 铁氧体 & 金属磁粉芯完整规格参数</p>
+    </div>
+
+    <!-- 搜索与筛选工具栏 -->
+    <div class="spec-toolbar">
+        <div class="spec-toolbar-row">
+            <div class="spec-search">
+                <div class="spec-input">
+                    <input type="text" id="specSearch" placeholder="🔍 搜索磁芯型号、系列、材料...">
+                </div>
+            </div>
+            <div class="spec-filter">
+                <div class="spec-input">
+                    <select id="specTypeFilter">
+                        <option value="all">全部类型</option>
+                        <option value="EE">EE 型</option>
+                        <option value="EI">EI 型</option>
+                        <option value="ETD">ETD 型</option>
+                        <option value="ER">ER 型</option>
+                        <option value="PQ">PQ 型</option>
+                        <option value="RM">RM 型</option>
+                        <option value="Toroid">Toroid (环形)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="spec-filter">
+                <div class="spec-input">
+                    <select id="specMaterialFilter">
+                        <option value="all">全部材料</option>
+                        <option value="ferrite">铁氧体 (MnZn/NiZn)</option>
+                        <option value="iron">铁粉芯</option>
+                        <option value="sendust">铁硅铝</option>
+                        <option value="mpp">MPP</option>
+                        <option value="hf">高磁通</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 统计卡片 -->
+    <div class="spec-stats">
+        <div class="spec-stat-card">
+            <div class="spec-stat-label">总规格数</div>
+            <div class="spec-stat-value" id="statTotal">0</div>
+        </div>
+        <div class="spec-stat-card">
+            <div class="spec-stat-label">铁氧体</div>
+            <div class="spec-stat-value" id="statFerrite">0</div>
+        </div>
+        <div class="spec-stat-card">
+            <div class="spec-stat-label">金属磁芯</div>
+            <div class="spec-stat-value" id="statMetal">0</div>
+        </div>
+        <div class="spec-stat-card">
+            <div class="spec-stat-label">当前筛选</div>
+            <div class="spec-stat-value" id="statFiltered">0</div>
+        </div>
+    </div>
+
+    <!-- 主内容区：表格 + 详情 -->
+    <div class="spec-layout">
+        <!-- 左侧：规格列表 -->
+        <div class="spec-table-card">
+            <div class="spec-table-header">
+                <div class="spec-table-title">📋 磁芯规格列表</div>
+                <div class="spec-count-badge" id="tableCountBadge">0 条记录</div>
+            </div>
+            <div class="spec-table-wrap">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>型号</th>
+                            <th>类型</th>
+                            <th>材料</th>
+                            <th>Ae (cm²)</th>
+                            <th>le (cm)</th>
+                            <th>Ve (cm³)</th>
+                            <th>Aw (cm²)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="specTableBody">
+                        <!-- 动态填充 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 右侧：详情面板 -->
+        <div class="spec-detail-card">
+            <div class="spec-detail-header">
+                <div class="spec-detail-title">📐 规格详情</div>
+            </div>
+            <div class="spec-detail-body" id="specDetailBody">
+                <div style="text-align: center; padding: 40px 20px; color: #8a9bb5;">
+                    <div style="font-size: 3rem; margin-bottom: 12px;">📦</div>
+                    <div>请从左侧表格选择磁芯查看详情</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../JavaScript/core-specs.js"></script>
+</body>
+</html>

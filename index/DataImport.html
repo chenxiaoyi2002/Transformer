@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>数据导入分析平台 | Excel · PDF · 图片 · 多文件处理</title>
+    <!-- SheetJS 解析 Excel -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    <!-- PDF.js 解析 PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- 设置 PDF.js worker -->
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <!-- Tesseract.js 图片 OCR 识别 -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <!-- JSZip 解压 xlsx 读取嵌入图片 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- 外部样式表 -->
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="../styles/data-import.css">
+</head>
+<body class="has-nav di-body">
+<!-- 高级导航栏 -->
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="#" class="navbar-brand">
+            <div class="navbar-brand-icon">⚡</div>
+            <span>磁芯工程平台</span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="index.html" class="nav-link"><span class="nav-icon">🧲</span> 铁氧体磁芯</a></li>
+            <li><a href="CalculationMetalMagneticCore.html" class="nav-link"><span class="nav-icon">🛡️</span> 金属磁芯</a></li>
+            <li><a href="DataImport.html" class="nav-link active"><span class="nav-icon">📊</span> 数据导入</a></li>
+            <li><a href="TransformerCalculation.html" class="nav-link"><span class="nav-icon">⚡</span> 变压器计算</a></li>
+            <li><a href="CommonMagneticCoreSpecifications.html" class="nav-link"><span class="nav-icon">📚</span> 磁芯规格库</a></li>
+            <li><a href="TransformerHandbook.html" class="nav-link"><span class="nav-icon">📖</span> 设计手册</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="di-container">
+    <!-- 页面标题 -->
+    <div class="hero" style="margin-bottom: 24px;">
+        <h1>📊 数据导入分析平台</h1>
+        <p>支持 Excel · PDF · 图片 (OCR) · CSV 多文件拖拽上传与数据拆分预览</p>
+    </div>
+
+    <!-- 文件拖拽上传区域 -->
+    <div class="di-dropzone" id="diDropzone">
+        <span class="di-dropzone-icon">📂</span>
+        <div class="di-dropzone-title">拖拽文件到此处，或点击选择文件</div>
+        <div class="di-dropzone-sub">支持批量上传多个 Excel / PDF / 图片 / CSV 文件</div>
+        <div class="di-dropzone-hint">📊 Excel (.xlsx, .xls) &nbsp;·&nbsp; 📄 PDF (.pdf) &nbsp;·&nbsp; 🖼️ 图片 (.png, .jpg) &nbsp;·&nbsp; 📋 CSV (.csv)</div>
+        <input type="file" id="diFileInput" multiple accept=".xlsx,.xls,.pdf,.csv,.png,.jpg,.jpeg,.gif,.bmp,.webp">
+    </div>
+
+    <!-- 文件列表 -->
+    <div id="diFileList" class="di-file-list"></div>
+
+    <!-- 进度条 -->
+    <div id="diProgressContainer" style="display:none;">
+        <div class="di-progress"><div class="di-progress-bar" id="diProgressBar"></div></div>
+        <div class="di-progress-text" id="diProgressText">解析进度: 0/0 (0%)</div>
+    </div>
+
+    <!-- 工具栏 -->
+    <div class="di-toolbar" id="diToolbar">
+        <div class="di-toolbar-left">
+            <span class="di-file-count" id="diFileCount">0 个文件</span>
+        </div>
+        <div class="di-toolbar-right">
+            <button class="di-btn di-btn-primary" id="diParseAll" disabled>▶ 全部解析</button>
+            <button class="di-btn di-btn-secondary" id="diExportCsv" disabled>⬇ 导出CSV</button>
+            <button class="di-btn di-btn-danger" id="diClearAll" disabled>🗑 清空</button>
+        </div>
+    </div>
+
+    <!-- 数据预览区 -->
+    <div id="diDataPreview">
+        <div class="di-empty">
+            <span class="di-empty-icon">📂</span>
+            <div class="di-empty-text">暂无数据</div>
+            <div class="di-empty-hint">请上传 Excel (.xlsx/.xls) 或 PDF 文件</div>
+        </div>
+    </div>
+
+    <!-- 底部说明 -->
+    <div class="card" style="margin-top: 10px;">
+        <div class="card-title" style="border-left-color: #8b5cf6;">🔍 功能说明</div>
+        <div class="def-grid">
+            <div class="def-item">
+                <strong>📊 Excel 解析</strong><br>
+                基于 SheetJS 库，支持 .xlsx / .xls<br>
+                自动识别所有 Sheet 与表头<br>
+                支持数值、文本、日期等数据类型
+            </div>
+            <div class="def-item">
+                <strong>📄 PDF 解析</strong><br>
+                基于 PDF.js 库，提取文本内容<br>
+                自动检测表格结构并按页拆分<br>
+                可切换不同页面查看
+            </div>
+            <div class="def-item">
+                <strong>📋 CSV 解析</strong><br>
+                支持标准 CSV 格式（含引号转义）<br>
+                自动识别表头行与数据行<br>
+                以表格方式展示
+            </div>
+            <div class="def-item">
+                <strong>⚡ 多文件处理</strong><br>
+                支持批量上传、批量解析<br>
+                文件独立管理，状态实时显示<br>
+                导出 CSV 保存分析结果
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../JavaScript/data-import.js"></script>
+</body>
+</html>

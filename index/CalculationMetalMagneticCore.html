@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>金属磁芯计算平台 | 电感量 · 磁通密度 · 磁导率 · 磁芯损耗</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- 外部样式表 -->
+    <link rel="stylesheet" href="../styles/index.css">
+</head>
+<body class="has-nav">
+<!-- 高级导航栏 -->
+<nav class="navbar">
+    <div class="navbar-inner">
+        <a href="#" class="navbar-brand">
+            <div class="navbar-brand-icon">⚡</div>
+            <span>磁芯工程平台</span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="index.html" class="nav-link"><span class="nav-icon">🧲</span> 铁氧体磁芯</a></li>
+            <li><a href="CalculationMetalMagneticCore.html" class="nav-link active"><span class="nav-icon">🛡️</span> 金属磁芯</a></li>
+            <li><a href="DataImport.html" class="nav-link"><span class="nav-icon">📊</span> 数据导入</a></li>
+            <li><a href="TransformerCalculation.html" class="nav-link"><span class="nav-icon">⚡</span> 变压器计算</a></li>
+            <li><a href="CommonMagneticCoreSpecifications.html" class="nav-link"><span class="nav-icon">📚</span> 磁芯规格库</a></li>
+            <li><a href="TransformerHandbook.html" class="nav-link"><span class="nav-icon">📖</span> 设计手册</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="hero">
+        <h1>🛡️ 金属磁芯综合计算平台</h1>
+        <p>电感量 L · 有效参数 Ae/le · 磁通密度 B · 磁场强度 H · 磁导率 μ · 磁芯损耗 Pv</p>
+    </div>
+
+    <!-- 第一行: 材料选择 + 几何参数 -->
+    <div class="grid-2col">
+        <!-- 左侧: 材料选择 & 基本参数 -->
+        <div class="card">
+            <div class="card-title card-title-metal">🧪 磁芯材料 & 基本参数</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>磁芯材料</label>
+                    <div class="input-icon">
+                        <select id="mcMaterial">
+                            <option value="iron" data-mu="75" data-bs="1.5">铁粉芯 (Iron Powder) μ=75</option>
+                            <option value="sendust" data-mu="60" data-bs="1.0" selected>铁硅铝 (Sendust) μ=60</option>
+                            <option value="mpp" data-mu="125" data-bs="0.7">MPP (钼坡莫合金) μ=125</option>
+                            <option value="hf" data-mu="60" data-bs="1.5">高磁通 (High Flux) μ=60</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>初始磁导率 μ<sub>i</sub></label>
+                    <div class="input-icon"><input type="number" id="mcMu" value="60" step="1"><span class="unit">—</span></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>匝数 N</label><div class="input-icon"><input type="number" id="mcTurns" value="50" step="1"><span class="unit">匝</span></div></div>
+                <div class="form-group"><label>电流 I (A)</label><div class="input-icon"><input type="number" id="mcCurrent" value="2.0" step="0.1"><span class="unit">A</span></div></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>有效截面积 A<sub>e</sub> (mm²)</label><div class="input-icon"><input type="number" id="mcAe" value="78.5" step="0.5"><span class="unit">mm²</span></div></div>
+                <div class="form-group"><label>有效磁路长度 l<sub>e</sub> (mm)</label><div class="input-icon"><input type="number" id="mcLe" value="60.0" step="0.5"><span class="unit">mm</span></div></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>频率 f (kHz)</label><div class="input-icon"><input type="number" id="mcFreq" value="50" step="5"><span class="unit">kHz</span></div></div>
+                <div class="form-group"><label>电压 V (V)</label><div class="input-icon"><input type="number" id="mcVoltage" value="24" step="1"><span class="unit">V</span></div></div>
+            </div>
+            <button id="calcMcBtn" class="btn-metal">⚡ 全面计算金属磁芯参数</button>
+            <div class="result-panel result-panel-metal spacing-top">
+                <div class="flex-badge">
+                    <span>材料: <strong id="mcMaterialName">铁硅铝</strong> <span class="material-tag material-tag-sendust">Sendust</span></span>
+                    <span>饱和磁密 B<sub>s</sub> ≈ <strong id="mcBsDisplay">1.0</strong> T</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧: 综合结果面板 -->
+        <div class="card">
+            <div class="card-title card-title-metal">📊 综合计算结果</div>
+            <div class="result-panel result-panel-metal">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>🧲 电感量 L = <strong id="mcInductance" class="result-metal">---</strong> μH</span>
+                    <span>📐 A<sub>L</sub> 值 = <strong id="mcAlValue" class="result-metal">---</strong> nH/N²</span>
+                </div>
+                <hr>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>🔹 磁通密度 B = <strong id="mcBDensity" class="result-metal">---</strong> T</span>
+                    <span>🔸 磁场强度 H = <strong id="mcHStrength" class="result-metal">---</strong> A/m</span>
+                </div>
+                <hr>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>📉 工作磁导率 μ<sub>e</sub> = <strong id="mcEffMu" class="result-metal">---</strong></span>
+                    <span>⚡ 磁芯损耗 P<sub>v</sub> = <strong id="mcCoreLoss" class="result-warm">---</strong> kW/m³</span>
+                </div>
+                <div class="note">📐 L = μ₀μ<sub>e</sub>N²A<sub>e</sub>/l<sub>e</sub> &nbsp; B = V/(4.44fNA<sub>e</sub>) &nbsp; H = NI/l<sub>e</sub><br>μ<sub>e</sub> 随DC偏磁递减，基于材料模型修正。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第二行: DC偏磁下磁导率递减 + 损耗详细 -->
+    <div class="grid-2col">
+        <!-- DC偏磁特性 -->
+        <div class="card">
+            <div class="card-title card-title-metal">📉 磁导率 vs DC偏磁特性</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>偏磁磁场 H<sub>DC</sub> (%H<sub>max</sub>)</label>
+                    <div class="input-icon"><input type="range" id="mcBiasPercent" value="30" min="0" max="100" step="1" style="padding:0;"><span class="unit" id="mcBiasPercentDisplay">30%</span></div>
+                </div>
+            </div>
+            <div class="result-panel result-panel-metal">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>当前偏磁 H<sub>DC</sub> = <strong id="mcBiasH">---</strong> A/m</span>
+                    <span>磁导率下降至 = <strong id="mcBiasMuPct">---</strong></span>
+                </div>
+                <div class="result-highlight spacing-top">
+                    μ<sub>e</sub>(偏磁) = <span id="mcBiasMuResult" class="result-metal">---</span>
+                </div>
+                <div class="note">📌 金属粉芯磁导率随DC偏磁增加而下降，不同材料下降曲线不同。<br>典型规律: 在 H=H<sub>c</sub> 时 μ 降为初始值的约 50%~70%。</div>
+            </div>
+        </div>
+
+        <!-- 损耗详细分析 -->
+        <div class="card">
+            <div class="card-title card-title-metal">⚡ 磁芯损耗分析</div>
+            <div class="result-panel result-panel-metal">
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                    <span>📊 总损耗 P<sub>v</sub> = <strong id="mcLossDetail">---</strong> kW/m³</span>
+                    <span>⚡ 磁滞损耗 P<sub>h</sub> ≈ <strong id="mcLossHysteresis">---</strong> kW/m³</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-top: 6px;">
+                    <span>🌊 涡流损耗 P<sub>e</sub> ≈ <strong id="mcLossEddy">---</strong> kW/m³</span>
+                    <span>损耗总量 (体积) = <strong id="mcLossVolume">---</strong> kW/m³</span>
+                </div>
+                <div class="note">🔎 Steinmetz 修正模型: P<sub>v</sub> = k × f<sup>α</sup> × B<sup>β</sup><br>不同金属粉芯材料系数不同，本计算采用典型中频参数。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第三行: 可视化图表 -->
+    <div class="grid-charts">
+        <div class="chart-box">
+            <h3>🔄 动态B-H回线 (金属磁芯)</h3>
+            <p>基于材料 B<sub>s</sub>、剩磁比、矫顽力生成</p>
+            <canvas id="mcHysteresisCanvas" width="500" height="300" style="width:100%; max-height:320px;"></canvas>
+            <div class="note">金属磁芯 B-H 回线面积较大，磁滞损耗较铁氧体高，但饱和磁密更高。</div>
+        </div>
+        <div class="chart-box">
+            <h3>📉 磁导率 vs DC偏磁曲线</h3>
+            <p>不同金属粉芯材料 μ 随 DC 偏磁下降特性</p>
+            <canvas id="mcPermeabilityCanvas" width="500" height="300" style="width:100%; max-height:320px;"></canvas>
+            <div class="note">横轴为归一化偏磁 H/H<sub>c</sub>，纵轴为 μ/μ<sub>0</sub> 百分比。<br>曲线基于典型材料数据拟合。</div>
+        </div>
+    </div>
+
+    <!-- 第四行: 损耗频率特性 -->
+    <div class="card card-full">
+        <div class="card-title card-title-metal">📈 磁芯损耗 vs 频率特性 (10kHz~500kHz)</div>
+        <canvas id="mcLossSpectrum" width="800" height="300" style="width:100%; max-height:320px;"></canvas>
+        <div class="note">基于 Steinmetz 模型绘制不同频率下的总损耗变化。<br>频率升高时涡流损耗分量显著增加。</div>
+    </div>
+
+    <!-- 定义与材料说明 -->
+    <div class="card">
+        <div class="card-title card-title-metal">📖 金属磁粉芯关键参数 & 材料对比</div>
+        <div class="def-grid">
+            <div class="def-item"><strong>🔹 铁粉芯 (Iron Powder)</strong><br>μ 10~100, B<sub>s</sub> ~1.5T<br>低成本，适用于储能电感、PFC</div>
+            <div class="def-item"><strong>🔸 铁硅铝 (Sendust)</strong><br>μ 26~125, B<sub>s</sub> ~1.0T<br>低损耗，良好DC偏磁特性</div>
+            <div class="def-item"><strong>🔹 MPP (钼坡莫合金)</strong><br>μ 14~550, B<sub>s</sub> ~0.7T<br>最低损耗，温度稳定性好</div>
+            <div class="def-item"><strong>🔸 高磁通 (High Flux)</strong><br>μ 14~160, B<sub>s</sub> ~1.5T<br>高储能，抗饱和能力强</div>
+        </div>
+    </div>
+</div>
+
+<script src="../JavaScript/metal-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+/* ============================================================
+   常用磁芯规格库 - 专用样式表
+   对应 index/常用磁芯规格.html
+   ============================================================ */
+
+.spec-toolbar {
+    background: white;
+    border: 1px solid #e2edf7;
+    border-radius: 24px;
+    padding: 18px;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.08);
+}
+
+.spec-toolbar-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+}
+
+.spec-search {
+    flex: 2;
+    min-width: 240px;
+}
+
+.spec-filter {
+    flex: 1;
+    min-width: 150px;
+}
+
+.spec-input {
+    display: flex;
+    align-items: center;
+    background: #f9fafc;
+    border: 1px solid #dce5ef;
+    border-radius: 18px;
+    padding: 0.2rem 0.9rem;
+    transition: 0.2s;
+}
+
+.spec-input:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16);
+}
+
+.spec-input input,
+.spec-input select {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0.65rem 0.2rem;
+    font-size: 0.9rem;
+    color: #1a2c3e;
+}
+
+.spec-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.spec-stat-card {
+    background: linear-gradient(135deg, #ffffff, #f7fbff);
+    border: 1px solid #e2edf7;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 8px 20px -14px rgba(0, 0, 0, 0.12);
+}
+
+.spec-stat-label {
+    font-size: 0.7rem;
+    color: #5b6e8c;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.spec-stat-value {
+    margin-top: 6px;
+    font-size: 1.45rem;
+    font-weight: 850;
+    color: #1e5b9e;
+    font-family: "Courier New", monospace;
+}
+
+.spec-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.65fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.spec-table-card,
+.spec-detail-card {
+    background: white;
+    border: 1px solid #e2edf7;
+    border-radius: 26px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px -16px rgba(0, 0, 0, 0.12);
+}
+
+.spec-table-header,
+.spec-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    background: #fafcff;
+    border-bottom: 1px solid #e2edf7;
+}
+
+.spec-table-title,
+.spec-detail-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #0c4a6e;
+}
+
+.spec-count-badge {
+    background: #e6f0ff;
+    color: #1e5b9e;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.spec-table-wrap {
+    overflow-x: auto;
+    max-height: 620px;
+}
+
+.spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+}
+
+.spec-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #eef3fc;
+    color: #1a2c3e;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 2px solid #dce5ef;
+}
+
+.spec-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #edf2f7;
+    white-space: nowrap;
+}
+
+.spec-table tr {
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.spec-table tr:hover td {
+    background: #f3f8ff;
+}
+
+.spec-table tr.active td {
+    background: #eef2ff;
+    color: #1e3c72;
+    font-weight: 700;
+}
+
+.spec-type {
+    display: inline-block;
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 0.66rem;
+    font-weight: 800;
+}
+
+.spec-type-ee { background: #dbeafe; color: #1e40af; }
+.spec-type-ei { background: #e0f2fe; color: #075985; }
+.spec-type-etd { background: #f3e8ff; color: #6b21a8; }
+.spec-type-er { background: #dcfce7; color: #166534; }
+.spec-type-pq { background: #fef3c7; color: #92400e; }
+.spec-type-rm { background: #fee2e2; color: #991b1b; }
+.spec-type-toroid { background: #fce7f3; color: #9d174d; }
+
+.spec-detail-body {
+    padding: 18px;
+}
+
+.spec-core-visual {
+    background: linear-gradient(135deg, #f8fbff, #eef3fc);
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 16px;
+    text-align: center;
+    border: 1px solid #e2edf7;
+}
+
+.spec-core-visual svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.spec-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.spec-detail-item {
+    background: #f8fafc;
+    border: 1px solid #edf2f7;
+    border-radius: 14px;
+    padding: 10px;
+}
+
+.spec-detail-label {
+    font-size: 0.63rem;
+    color: #64748b;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.spec-detail-value {
+    margin-top: 4px;
+    font-size: 1rem;
+    font-weight: 850;
+    color: #1e5b9e;
+    font-family: "Courier New", monospace;
+}
+
+.spec-note {
+    margin-top: 14px;
+    font-size: 0.72rem;
+    color: #5b6e8c;
+    line-height: 1.6;
+    border-top: 1px dashed #cbdde9;
+    padding-top: 12px;
+}
+
+.spec-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.spec-btn {
+    flex: 1;
+    border: none;
+    border-radius: 999px;
+    padding: 0.65rem 1rem;
+    font-weight: 750;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 0;
+}
+
+.spec-btn-primary {
+    background: #1e4a76;
+    color: white;
+}
+
+.spec-btn-primary:hover {
+    background: #123b60;
+}
+
+.spec-btn-secondary {
+    background: #eef3fc;
+    color: #1e4a76;
+}
+
+.spec-btn-secondary:hover {
+    background: #ddeafe;
+}
+
+@media (max-width: 980px) {
+    .spec-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .spec-table-wrap {
+        max-height: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .spec-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .spec-toolbar-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

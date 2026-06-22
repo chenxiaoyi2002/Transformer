@@ -1,0 +1,527 @@
+/* ============================================================
+   铁氧体磁芯全面计算平台 - 样式表
+   对应 index/铁氧体磁芯计算.html & index/金属磁芯计算.html
+   ============================================================ */
+
+/* ----- 全局重置 & 基础样式 ----- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f5f9ff;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    padding: 0;
+    color: #1a2c3e;
+}
+
+body.has-nav {
+    padding-top: 72px;
+}
+
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 28px 24px;
+}
+
+/* ============================================================
+   高级导航栏
+   ============================================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(226, 237, 247, 0.8);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.3s;
+}
+
+.navbar:hover {
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-inner {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0c4a6e;
+    text-decoration: none;
+    letter-spacing: -0.3px;
+}
+
+.navbar-brand-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #1e3c72, #2b5876);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+}
+
+.navbar-links li {
+    margin: 0;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4b556b;
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    background: rgba(59, 130, 246, 0.08);
+    color: #1e4a76;
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, #1e3c72, #2b5876);
+    color: white;
+    box-shadow: 0 4px 12px rgba(30, 60, 114, 0.25);
+}
+
+.nav-link.active::after {
+    display: none;
+}
+
+.nav-link .nav-icon {
+    font-size: 1.1rem;
+}
+
+/* 导航栏响应式 */
+@media (max-width: 640px) {
+    .navbar-inner {
+        padding: 0 16px;
+        height: 56px;
+    }
+    .navbar-brand span {
+        display: none;
+    }
+    .nav-link {
+        padding: 6px 12px;
+        font-size: 0.78rem;
+    }
+    body.has-nav {
+        padding-top: 56px;
+    }
+}
+
+/* ----- 头部 (Hero) ----- */
+.hero {
+    text-align: center;
+    margin-bottom: 32px;
+}
+.hero h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1e3c72, #2b5876);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.hero p {
+    color: #2c3e66;
+    max-width: 900px;
+    margin: 10px auto 0;
+    font-size: 0.95rem;
+}
+
+/* ----- 卡片网格布局 ----- */
+.grid-2col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+    gap: 28px;
+    margin-bottom: 30px;
+}
+
+.grid-3col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 28px;
+    margin-bottom: 30px;
+}
+
+/* ----- 卡片通用样式 ----- */
+.card {
+    background: white;
+    border-radius: 28px;
+    box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+    padding: 1.6rem;
+    border: 1px solid #e2edf7;
+    transition: 0.2s;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    border-left: 5px solid #3b82f6;
+    padding-left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #0c4a6e;
+}
+
+.card-title-metal {
+    border-left-color: #8b5cf6;
+}
+
+/* ----- 表单控件 ----- */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 120px;
+}
+
+label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #4b556b;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-icon {
+    display: flex;
+    align-items: center;
+    background: #f9fafc;
+    border: 1px solid #dce5ef;
+    border-radius: 20px;
+    padding: 0.2rem 0.9rem;
+    transition: 0.2s;
+}
+
+.input-icon:focus-within {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+input,
+select {
+    width: 100%;
+    padding: 0.65rem 0.2rem;
+    background: transparent;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    outline: none;
+    color: #1a2c3e;
+}
+
+select {
+    cursor: pointer;
+}
+
+input[readonly] {
+    cursor: default;
+    opacity: 0.8;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.unit {
+    font-size: 0.7rem;
+    color: #5f6c84;
+    margin-left: 6px;
+    white-space: nowrap;
+}
+
+/* ----- 按钮样式 ----- */
+button {
+    background: #1e4a76;
+    color: white;
+    border: none;
+    border-radius: 34px;
+    padding: 0.7rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 0.5rem;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+button:hover {
+    background: #0f3a5c;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: #336b87;
+}
+
+.btn-secondary:hover {
+    background: #24576e;
+}
+
+.btn-accent {
+    background: #8b5cf6;
+}
+
+.btn-accent:hover {
+    background: #7c3aed;
+}
+
+.btn-copper {
+    background: #b45309;
+}
+
+.btn-copper:hover {
+    background: #92400e;
+}
+
+.btn-metal {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+.btn-metal:hover {
+    background: linear-gradient(135deg, #4338ca, #6d28d9);
+}
+
+/* ----- 结果面板 ----- */
+.result-panel {
+    background: #eef3fc;
+    border-radius: 24px;
+    padding: 1rem 1.2rem;
+    margin-top: 1.4rem;
+}
+
+.result-panel-metal {
+    background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+}
+
+.result-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1e5b9e;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.result-value-sm {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1e5b9e;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.result-highlight {
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.result-warm {
+    color: #b45309;
+}
+
+.result-green {
+    color: #1e6f5c;
+}
+
+.result-metal {
+    color: #6d28d9;
+}
+
+/* ----- 内联辅助样式 ----- */
+.inline-code {
+    background: #eef2ff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-family: monospace;
+    font-size: 0.8rem;
+}
+
+.note {
+    font-size: 0.7rem;
+    color: #5b6e8c;
+    margin-top: 0.6rem;
+    border-top: 1px dashed #cbdde9;
+    padding-top: 0.6rem;
+    line-height: 1.5;
+}
+
+hr {
+    margin: 1rem 0;
+    border: none;
+    border-top: 1px solid #e2edf7;
+}
+
+.flex-badge {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0.5rem 0;
+}
+
+.badge {
+    background: #e6f0ff;
+    border-radius: 30px;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.badge-metal {
+    background: #eef2ff;
+    color: #5b21b6;
+}
+
+/* ----- 分割线间距调整 ----- */
+.spacing-top {
+    margin-top: 0.8rem;
+}
+
+/* ----- 图表区域 ----- */
+.grid-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 24px;
+    margin: 24px 0 28px;
+}
+
+.chart-box {
+    background: white;
+    border-radius: 28px;
+    padding: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid #e6edf4;
+}
+
+.chart-box h3 {
+    margin: 0 0 6px;
+    font-weight: 600;
+}
+
+.chart-box p {
+    font-size: 0.7rem;
+    color: #4b5563;
+    margin-bottom: 8px;
+}
+
+.card-full {
+    margin-top: 10px;
+}
+
+/* ----- 定义区 ----- */
+.def-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.def-item {
+    flex: 1;
+    min-width: 180px;
+}
+
+.def-item strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* ----- 材料选择标签 ----- */
+.material-tag {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.material-tag-iron {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.material-tag-sendust {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.material-tag-mpp {
+    background: #f3e8ff;
+    color: #6b21a8;
+}
+
+.material-tag-hf {
+    background: #fce7f3;
+    color: #9d174d;
+}
+
+/* ----- 响应式 ----- */
+@media (max-width: 780px) {
+    .container {
+        padding: 16px;
+    }
+    .grid-2col {
+        grid-template-columns: 1fr;
+    }
+    .grid-3col {
+        grid-template-columns: 1fr;
+    }
+    .grid-charts {
+        grid-template-columns: 1fr;
+    }
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+}

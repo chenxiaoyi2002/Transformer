@@ -1,0 +1,460 @@
+/* ============================================================
+   数据导入分析平台 - 专用样式表
+   对应 index/数据导入.html
+   ============================================================ */
+
+/* ----- 页面布局 ----- */
+.di-body {
+    background: #f0f4f8;
+    min-height: 100vh;
+}
+
+.di-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* ----- 文件拖拽区 ----- */
+.di-dropzone {
+    background: white;
+    border: 2.5px dashed #c5d5e6;
+    border-radius: 28px;
+    padding: 50px 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    margin-bottom: 28px;
+}
+
+.di-dropzone:hover {
+    border-color: #3b82f6;
+    background: #fafcff;
+}
+
+.di-dropzone.dz-dragover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+    transform: scale(1.01);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
+}
+
+.di-dropzone-icon {
+    font-size: 3.2rem;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.di-dropzone-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a2c3e;
+    margin-bottom: 8px;
+}
+
+.di-dropzone-sub {
+    font-size: 0.85rem;
+    color: #6b7a95;
+    margin-bottom: 6px;
+}
+
+.di-dropzone-hint {
+    font-size: 0.72rem;
+    color: #8a9bb5;
+    margin-top: 8px;
+}
+
+.di-dropzone input[type="file"] {
+    display: none;
+}
+
+/* ----- 文件列表 ----- */
+.di-file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.di-file-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid #e2edf7;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: 0.2s;
+    animation: diFadeIn 0.3s ease;
+}
+
+.di-file-item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+@keyframes diFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.di-file-icon {
+    font-size: 1.4rem;
+}
+
+.di-file-name {
+    font-weight: 600;
+    color: #1a2c3e;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.di-file-size {
+    color: #8a9bb5;
+    font-size: 0.75rem;
+}
+
+.di-file-status {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.di-file-status.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.di-file-status.parsing {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.di-file-status.done {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.di-file-status.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.di-file-remove {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 0 4px;
+    margin: 0;
+    width: auto;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.di-file-remove:hover {
+    color: #ef4444;
+    background: #fee2e2;
+    transform: none;
+}
+
+/* ----- 控制栏 ----- */
+.di-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.di-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.di-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.di-btn {
+    padding: 0.55rem 1.2rem;
+    border-radius: 34px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.85rem;
+    width: auto;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.di-btn-primary {
+    background: #1e4a76;
+    color: white;
+}
+.di-btn-primary:hover {
+    background: #0f3a5c;
+    transform: translateY(-1px);
+}
+
+.di-btn-secondary {
+    background: #e6edf4;
+    color: #1a2c3e;
+}
+.di-btn-secondary:hover {
+    background: #d5e0eb;
+}
+
+.di-btn-danger {
+    background: #ef4444;
+    color: white;
+}
+.di-btn-danger:hover {
+    background: #dc2626;
+}
+
+.di-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.di-file-count {
+    font-size: 0.85rem;
+    color: #6b7a95;
+    font-weight: 500;
+}
+
+/* ----- 数据预览 ----- */
+.di-data-section {
+    background: white;
+    border-radius: 28px;
+    border: 1px solid #e2edf7;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.di-data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #fafcff;
+    border-bottom: 1px solid #e2edf7;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.di-data-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0c4a6e;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.di-data-badge {
+    background: #e6f0ff;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #3b82f6;
+}
+
+.di-data-nav {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.di-tab {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: #f0f4f8;
+    color: #4b556b;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 0;
+    width: auto;
+}
+
+.di-tab:hover {
+    background: #e2edf7;
+    transform: none;
+}
+
+.di-tab.active {
+    background: #1e4a76;
+    color: white;
+}
+
+/* ----- 表格容器 ----- */
+.di-table-wrap {
+    overflow-x: auto;
+    padding: 0 4px;
+}
+
+.di-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.di-table th {
+    background: #f0f4f8;
+    color: #1a2c3e;
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid #dce5ef;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.di-table td {
+    padding: 8px 14px;
+    border-bottom: 1px solid #eef2f6;
+    color: #1a2c3e;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.di-table tr:hover td {
+    background: #fafcff;
+}
+
+.di-table tr:nth-child(even) td {
+    background: #fafbfc;
+}
+
+.di-table tr:nth-child(even):hover td {
+    background: #f0f6ff;
+}
+
+/* ----- 空状态 ----- */
+.di-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #8a9bb5;
+}
+
+.di-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.di-empty-text {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.di-empty-hint {
+    font-size: 0.8rem;
+    margin-top: 6px;
+}
+
+/* ----- PDF 文本预览 ----- */
+.di-pdf-text {
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: #1a2c3e;
+    white-space: pre-wrap;
+    max-height: 500px;
+    overflow-y: auto;
+    background: #fafbfc;
+}
+
+.di-pdf-text strong {
+    color: #0c4a6e;
+    font-weight: 700;
+    font-family: inherit;
+}
+
+/* ----- 进度条 ----- */
+.di-progress {
+    height: 4px;
+    background: #e2edf7;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.di-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width: 0%;
+}
+
+.di-progress-text {
+    font-size: 0.7rem;
+    color: #6b7a95;
+    text-align: center;
+    margin-top: 4px;
+}
+
+/* ----- 无匹配格式警告 ----- */
+.di-format-warn {
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    border-radius: 16px;
+    padding: 14px 18px;
+    font-size: 0.82rem;
+    color: #92400e;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ----- 响应式 ----- */
+@media (max-width: 780px) {
+    .di-container {
+        padding: 14px;
+    }
+    .di-dropzone {
+        padding: 30px 16px;
+    }
+    .di-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .di-toolbar-left,
+    .di-toolbar-right {
+        justify-content: center;
+    }
+    .di-data-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .di-data-nav {
+        justify-content: center;
+    }
+}
