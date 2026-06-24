@@ -290,7 +290,6 @@ function updateMcHysteresis(mat, B_work, H_work) {
     const Br = mat.BrRatio * Bs;
     const Hc = mat.Hc;
     
-    // 确定H范围 - 取工作H的3倍和5倍Hc的较大值
     const Hmax = Math.max(3 * Math.max(H_work, Hc), 100);
     
     const upPoints = [
@@ -310,7 +309,6 @@ function updateMcHysteresis(mat, B_work, H_work) {
     
     const upCurve = catmullRomPoints(upPoints, 28);
     const downCurve = catmullRomPoints(downPoints, 28);
-    // 各添加一个工作点标记
     const workPoint = { x: H_work, y: B_work };
     
     const ctx = document.getElementById('mcHysteresisCanvas').getContext('2d');
@@ -320,37 +318,15 @@ function updateMcHysteresis(mat, B_work, H_work) {
         type: 'scatter',
         data: {
             datasets: [
-                {
-                    label: '上升支',
-                    data: upCurve.map(p => ({ x: p.x, y: p.y })),
-                    borderColor: '#8b5cf6',
-                    borderWidth: 2.5,
-                    showLine: true,
-                    pointRadius: 0,
-                    tension: 0.1
-                },
-                {
-                    label: '下降支',
-                    data: downCurve.map(p => ({ x: p.x, y: p.y })),
-                    borderColor: '#3b82f6',
-                    borderWidth: 2.5,
-                    showLine: true,
-                    pointRadius: 0,
-                    tension: 0.1
-                },
-                {
-                    label: '工作点',
-                    data: [workPoint],
-                    borderColor: '#ef4444',
-                    backgroundColor: '#ef4444',
-                    pointRadius: 6,
-                    pointStyle: 'triangle',
-                    showLine: false
-                }
+                { label: '上升支', data: upCurve.map(p => ({ x: p.x, y: p.y })), borderColor: '#8b5cf6', borderWidth: 2.5, showLine: true, pointRadius: 0, tension: 0.1 },
+                { label: '下降支', data: downCurve.map(p => ({ x: p.x, y: p.y })), borderColor: '#3b82f6', borderWidth: 2.5, showLine: true, pointRadius: 0, tension: 0.1 },
+                { label: '工作点', data: [workPoint], borderColor: '#ef4444', backgroundColor: '#ef4444', pointRadius: 6, pointStyle: 'triangle', showLine: false }
             ]
         },
         options: {
             responsive: true,
+            animation: { duration: 0 },
+            interaction: { mode: 'nearest', intersect: true, axis: 'xy' },
             scales: {
                 x: { title: { display: true, text: 'H (A/m)' } },
                 y: { title: { display: true, text: 'B (T)' } }
@@ -359,9 +335,7 @@ function updateMcHysteresis(mat, B_work, H_work) {
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            if (context.dataset.label === '工作点') {
-                                return '工作点: H=' + context.parsed.x.toFixed(1) + ' A/m, B=' + context.parsed.y.toFixed(4) + ' T';
-                            }
+                            if (context.dataset.label === '工作点') return '工作点: H=' + context.parsed.x.toFixed(1) + ' A/m, B=' + context.parsed.y.toFixed(4) + ' T';
                             return context.dataset.label;
                         }
                     }
@@ -413,6 +387,8 @@ function updatePermeabilityCurve(mat) {
         data: { datasets: datasets },
         options: {
             responsive: true,
+            animation: { duration: 0 },
+            interaction: { mode: 'index', intersect: false },
             scales: {
                 x: {
                     title: { display: true, text: '偏磁磁场 H/Hc (%)' },
@@ -426,7 +402,11 @@ function updatePermeabilityCurve(mat) {
                 }
             },
             plugins: {
-                legend: { position: 'top' }
+                legend: { position: 'top' },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
             }
         }
     });
@@ -490,6 +470,8 @@ function updateLossSpectrum(mat, B_T) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            animation: { duration: 0 },
+            interaction: { mode: 'index', intersect: false },
             scales: {
                 x: {
                     title: { display: true, text: '频率 f (kHz)' }
