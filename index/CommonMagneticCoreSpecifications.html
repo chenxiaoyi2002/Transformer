@@ -19,9 +19,9 @@
         <ul class="navbar-links">
             <li><a href="index.html" class="nav-link"><span class="nav-icon">🧲</span> 铁氧体磁芯</a></li>
             <li><a href="CalculationMetalMagneticCore.html" class="nav-link"><span class="nav-icon">🛡️</span> 金属磁芯</a></li>
-            <li><a href="DataImport.html" class="nav-link"><span class="nav-icon">📊</span> 数据导入</a></li>
             <li><a href="TransformerCalculation.html" class="nav-link"><span class="nav-icon">⚡</span> 变压器计算</a></li>
             <li><a href="CommonMagneticCoreSpecifications.html" class="nav-link active"><span class="nav-icon">📚</span> 磁芯规格库</a></li>
+            <li><a href="DataImport.html" class="nav-link"><span class="nav-icon">📊</span> 数据导入</a></li>
             <li><a href="TransformerHandbook.html" class="nav-link"><span class="nav-icon">📖</span> 设计手册</a></li>
         </ul>
     </div>
@@ -66,6 +66,13 @@
                     </select>
                 </div>
             </div>
+            <div class="spec-filter">
+                <div class="spec-input">
+                    <select id="specSupplierFilter">
+                        <option value="all">全部供应商</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -104,6 +111,7 @@
                             <th>型号</th>
                             <th>类型</th>
                             <th>材料</th>
+                            <th>供应商</th>
                             <th>Ae (cm²)</th>
                             <th>le (cm)</th>
                             <th>Ve (cm³)</th>

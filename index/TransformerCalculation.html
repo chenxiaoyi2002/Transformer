@@ -19,9 +19,9 @@
         <ul class="navbar-links">
             <li><a href="index.html" class="nav-link"><span class="nav-icon">🧲</span> 铁氧体磁芯</a></li>
             <li><a href="CalculationMetalMagneticCore.html" class="nav-link"><span class="nav-icon">🛡️</span> 金属磁芯</a></li>
-            <li><a href="DataImport.html" class="nav-link"><span class="nav-icon">📊</span> 数据导入</a></li>
             <li><a href="TransformerCalculation.html" class="nav-link active"><span class="nav-icon">⚡</span> 变压器计算</a></li>
             <li><a href="CommonMagneticCoreSpecifications.html" class="nav-link"><span class="nav-icon">📚</span> 磁芯规格库</a></li>
+            <li><a href="DataImport.html" class="nav-link"><span class="nav-icon">📊</span> 数据导入</a></li>
             <li><a href="TransformerHandbook.html" class="nav-link"><span class="nav-icon">📖</span> 设计手册</a></li>
         </ul>
     </div>
@@ -41,61 +41,15 @@
         <button class="topo-btn" data-topo="fullbridge"><span class="topo-icon">🌁</span> 全桥</button>
         <button class="topo-btn" data-topo="llc"><span class="topo-icon">🎯</span> LLC半桥</button>
         <button class="topo-btn" data-topo="phasefull"><span class="topo-icon">📐</span> 移相全桥</button>
+        <button class="topo-btn" data-topo="boost"><span class="topo-icon">⬆️</span> 升压(Boost)</button>
+        <button class="topo-btn" data-topo="buck"><span class="topo-icon">⬇️</span> 降压(Buck)</button>
     </div>
 
     <!-- 原理图区域 -->
     <div class="schematic-area">
         <div class="schematic-title">📐 正激变压器原理图 (Forward Converter)</div>
         <div id="schematicContainer">
-            <svg viewBox="0 0 600 280" style="width:100%; max-width:700px;">
-                <!-- 正激原理图 -->
-                <!-- 输入直流 -->
-                <rect x="30" y="110" width="50" height="40" fill="#eef3fc" stroke="#3b82f6" stroke-width="2" rx="4"/>
-                <text x="55" y="135" text-anchor="middle" font-size="11" font-weight="600" fill="#1e4a76">Vin</text>
-                
-                <!-- 开关管 -->
-                <rect x="110" y="115" width="40" height="30" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="3"/>
-                <text x="130" y="134" text-anchor="middle" font-size="10" font-weight="600" fill="#92400e">Q1</text>
-                
-                <!-- 变压器 -->
-                <g transform="translate(180, 80)">
-                    <rect x="0" y="0" width="80" height="100" fill="white" stroke="#1e4a76" stroke-width="2.5" rx="6"/>
-                    <line x1="10" y1="20" x2="70" y2="20" stroke="#1e4a76" stroke-width="2"/>
-                    <line x1="10" y1="40" x2="70" y2="40" stroke="#1e4a76" stroke-width="2"/>
-                    <line x1="10" y1="60" x2="70" y2="60" stroke="#1e4a76" stroke-width="2"/>
-                    <line x1="10" y1="80" x2="70" y2="80" stroke="#1e4a76" stroke-width="2"/>
-                    <text x="40" y="55" text-anchor="middle" font-size="10" font-weight="700" fill="#0c4a6e">T1</text>
-                    <text x="40" y="70" text-anchor="middle" font-size="8" fill="#4b556b">1:Ns</text>
-                </g>
-                
-                <!-- 输出整流 -->
-                <rect x="290" y="115" width="35" height="30" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" rx="3"/>
-                <text x="307" y="134" text-anchor="middle" font-size="10" font-weight="600" fill="#1e40af">D1</text>
-                
-                <!-- 滤波电感 -->
-                <rect x="350" y="110" width="50" height="40" fill="#eef3fc" stroke="#3b82f6" stroke-width="2" rx="4"/>
-                <text x="375" y="135" text-anchor="middle" font-size="11" font-weight="600" fill="#1e4a76">Lf</text>
-                
-                <!-- 输出电容 -->
-                <rect x="430" y="115" width="40" height="30" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="3"/>
-                <text x="450" y="134" text-anchor="middle" font-size="10" font-weight="600" fill="#92400e">Co</text>
-                
-                <!-- 负载 -->
-                <rect x="500" y="115" width="50" height="30" fill="#d1fae5" stroke="#10b981" stroke-width="2" rx="3"/>
-                <text x="525" y="134" text-anchor="middle" font-size="10" font-weight="600" fill="#065f46">Load</text>
-                
-                <!-- 连线 -->
-                <line x1="80" y1="130" x2="110" y2="130" stroke="#1a2c3e" stroke-width="2"/>
-                <line x1="150" y1="130" x2="180" y2="130" stroke="#1a2c3e" stroke-width="2"/>
-                <line x1="260" y1="130" x2="290" y2="130" stroke="#1a2c3e" stroke-width="2"/>
-                <line x1="325" y1="130" x2="350" y2="130" stroke="#1a2c3e" stroke-width="2"/>
-                <line x1="400" y1="130" x2="430" y2="130" stroke="#1a2c3e" stroke-width="2"/>
-                <line x1="470" y1="130" x2="500" y2="130" stroke="#1a2c3e" stroke-width="2"/>
-                
-                <!-- 辅助标注 -->
-                <text x="200" y="210" text-anchor="middle" font-size="9" fill="#6b7a95">开关管导通时能量传递到副边</text>
-                <text x="200" y="225" text-anchor="middle" font-size="9" fill="#6b7a95">适用于中等功率 (50W~500W)</text>
-            </svg>
+            <div style="padding:40px;color:#8a9bb5;text-align:center;">⚡ 等待加载原理图...</div>
         </div>
     </div>
 
@@ -228,7 +182,7 @@
                 <div class="tf-result-value" id="resIs">---</div>
             </div>
             <div class="tf-result-item">
-                <div class="tf-result-label">线径选择 (AWG)</div>
+                <div class="tf-result-label">线径选择 (JIS5)</div>
                 <div class="tf-result-value" id="resAwg">---</div>
             </div>
         </div>
@@ -238,25 +192,102 @@
         </div>
     </div>
 
-    <!-- 线径参考表 -->
+    <!-- 磁芯数据导入区 -->
+    <div class="tf-card" style="margin-bottom: 24px;">
+        <div class="tf-card-title">📦 磁芯规格库数据导入</div>
+        <div id="coreImportInfo">
+            <span style="color:#8a9bb5;">未导入磁芯数据，请从磁芯规格库选择</span>
+        </div>
+        <div class="tf-actions" style="margin-top: 10px;">
+            <button class="spec-btn spec-btn-secondary" onclick="window.location.href='CommonMagneticCoreSpecifications.html'">📚 打开磁芯规格库</button>
+        </div>
+        <div class="tf-note">
+            📌 在磁芯规格库页面点击"用于变压器计算"按钮，会自动将磁芯参数传递到本页面。
+        </div>
+    </div>
+
+    <!-- 多股膜包线计算 -->
+    <div class="tf-card" style="margin-bottom: 24px;">
+        <div class="tf-card-title">🧵 多股膜包线最大/最小完成外径计算</div>
+        <div class="tf-row">
+            <div class="tf-group">
+                <label>选择线径 (JIS5)</label>
+                <div class="tf-input">
+                    <select id="litzWireSel" style="font-size:0.78rem;">
+                        <option value="">-- 选择线径 --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tf-group">
+                <label>或手动输入 (mm)</label>
+                <div class="tf-input">
+                    <input type="number" id="litzManualDia" value="0.200" step="0.005" min="0.01">
+                    <span class="tf-unit">mm</span>
+                </div>
+            </div>
+            <div class="tf-group">
+                <label>股数</label>
+                <div class="tf-input">
+                    <input type="number" id="litzStrands" value="7" step="1" min="1" max="1000">
+                    <span class="tf-unit">股</span>
+                </div>
+            </div>
+        </div>
+        <button class="tf-btn-calc" id="litzCalcBtn">🧵 计算完成外径</button>
+        <div class="tf-result-grid">
+            <div class="tf-result-item">
+                <div class="tf-result-label">单股裸线径</div>
+                <div class="tf-result-value" id="litzResDia">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">含漆膜外径</div>
+                <div class="tf-result-value" id="litzResMaxDia">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">股数</div>
+                <div class="tf-result-value" id="litzResStrands">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">填充系数</div>
+                <div class="tf-result-value" id="litzResFill">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">最大完成外径</div>
+                <div class="tf-result-value" style="color:#dc2626;" id="litzOuterMax">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">最小完成外径</div>
+                <div class="tf-result-value" style="color:#16a34a;" id="litzOuterMin">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">总截面积</div>
+                <div class="tf-result-value" id="litzResArea">---</div>
+            </div>
+            <div class="tf-result-item">
+                <div class="tf-result-label">直流电阻 (20°C)</div>
+                <div class="tf-result-value" id="litzResRes">---</div>
+            </div>
+        </div>
+        <div class="tf-note">
+            📐 最大完成外径考虑填充系数和漆膜厚度；最小完成外径为理想紧密堆积。<br>
+            填充系数参考多股膜包线/利兹线经验值，随股数增加而降低。
+        </div>
+    </div>
+
+    <!-- 线径参考表 (JIS5 标准) -->
     <div class="tf-card">
-        <div class="tf-card-title">📏 常用线径参考 (AWG)</div>
+        <div class="tf-card-title">📏 常用线径参考 (JIS C 3102 标准) — 点击选择用于多股计算</div>
+        <div class="tf-note" style="margin-bottom:8px;">💡 点击任意行可将线径填充到上方多股膜包线计算器</div>
+        <div style="max-height:380px; overflow-y:auto;">
         <table class="tf-wire-table">
             <thead>
-                <tr><th>AWG</th><th>直径 (mm)</th><th>截面积 (mm²)</th><th>截面积 (cmil)</th><th>载流量 @4A/mm² (A)</th></tr>
+                <tr><th>JIS5 #</th><th>裸线径 (mm)</th><th>最大完成外径 (mm)</th><th>截面积 (mm²)</th><th>电阻 @20°C (Ω/m)</th><th>载流量 @4A/mm² (A)</th></tr>
             </thead>
-            <tbody>
-                <tr><td>18</td><td>1.02</td><td>0.823</td><td>1620</td><td>3.29</td></tr>
-                <tr><td>17</td><td>1.15</td><td>1.04</td><td>2050</td><td>4.16</td></tr>
-                <tr><td>16</td><td>1.29</td><td>1.31</td><td>2580</td><td>5.24</td></tr>
-                <tr><td>15</td><td>1.45</td><td>1.65</td><td>3260</td><td>6.60</td></tr>
-                <tr><td>14</td><td>1.63</td><td>2.08</td><td>4110</td><td>8.32</td></tr>
-                <tr><td>13</td><td>1.83</td><td>2.62</td><td>5180</td><td>10.48</td></tr>
-                <tr><td>12</td><td>2.05</td><td>3.31</td><td>6530</td><td>13.24</td></tr>
-                <tr><td>11</td><td>2.30</td><td>4.17</td><td>8230</td><td>16.68</td></tr>
-                <tr><td>10</td><td>2.59</td><td>5.26</td><td>10380</td><td>21.04</td></tr>
+            <tbody id="jis5TableBody">
+                <!-- 由JS动态填充 -->
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 
